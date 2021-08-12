@@ -45,6 +45,7 @@ jobs:
       uses: github/codeql-action/init@v1
       with:
         tools: latest
+        db-location: '${{ runner.temp }}/dbs'
         languages: ${{ matrix.language }}
         config-file: ./.github/codeql/codeql-config.yml
         # If you wish to specify custom queries, you can do so here or in a config file.
@@ -80,3 +81,14 @@ jobs:
         path: |
           ${{ runner.temp }}/**/*.log
           ${{ runner.temp }}/**/*.hprof
+
+    - name: Zip up DBs
+      run: zip -r db.zip *
+      working-directory: ${{ runner.temp }}/dbs
+
+    - uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: everything
+        path: |
+          ${{ runner.temp }}/dbs/db.zip

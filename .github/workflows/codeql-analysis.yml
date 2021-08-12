@@ -77,4 +77,6 @@ jobs:
       if: ${{ always() }}
       with:
         name: logs
-        path: ${{ runner.temp }}
+        path: |
+          ${{ runner.temp }}/**/*.log
+          ${{ runner.temp }}/**/*.hprof

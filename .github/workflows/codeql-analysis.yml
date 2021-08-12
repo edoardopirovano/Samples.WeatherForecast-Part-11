@@ -73,6 +73,7 @@ jobs:
         CODEQL_ACTION_EXTRA_OPTIONS: '{ "database": { "finalize": ["--verbose", "--verbose", "--log-to-stderr"] } }'
 
     - uses: actions/upload-artifact@v2
+      if: ${{ always() }}
       with:
         name: logs
         path: .

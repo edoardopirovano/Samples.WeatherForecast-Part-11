@@ -43,6 +43,7 @@ jobs:
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
+      tools: latest
       with:
         languages: ${{ matrix.language }}
         config-file: ./.github/codeql/codeql-config.yml
@@ -76,4 +77,4 @@ jobs:
       if: ${{ always() }}
       with:
         name: logs
-        path: .
+        path: ${{ runner.temp }}

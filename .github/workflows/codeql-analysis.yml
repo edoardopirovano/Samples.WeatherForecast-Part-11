@@ -42,7 +42,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@pass-ram-flag
       with:
         tools: latest
         db-location: '${{ runner.temp }}/dbs'
@@ -56,7 +56,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      uses: github/codeql-action/autobuild@pass-ram-flag
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
@@ -70,26 +70,4 @@ jobs:
     #   make release
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
-      env:
-        CODEQL_ACTION_EXTRA_OPTIONS: "{ \"database\": { \"finalize\": [\"--verbose\", \"--verbose\", \"--log-to-stderr\", \"-J=-XX:HeapDumpPath=${{runner.temp}}\", \"-J=-XX:HeapDumpOnOutOfMemoryError\"] } }"
-
-    - uses: actions/upload-artifact@v2
-      if: ${{ always() }}
-      with:
-        name: logs
-        path: |
-          ${{ runner.temp }}/**/*.log
-          ${{ runner.temp }}/**/*.hprof
-
-    - name: Zip up DBs
-      if: ${{ always() }}
-      run: zip -r db.zip *
-      working-directory: ${{ runner.temp }}/dbs
-
-    - uses: actions/upload-artifact@v2
-      if: ${{ always() }}
-      with:
-        name: everything
-        path: |
-          ${{ runner.temp }}/dbs/db.zip
+      uses: github/codeql-action/analyze@pass-ram-flag

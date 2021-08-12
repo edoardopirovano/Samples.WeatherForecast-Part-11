@@ -71,3 +71,5 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@pass-ram-flag
+      env:
+        CODEQL_ACTION_EXTRA_OPTIONS: "{ \"database\": { \"finalize\": [\"--verbose\", \"--log-to-stderr\" ] } }"

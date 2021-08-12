@@ -83,6 +83,7 @@ jobs:
           ${{ runner.temp }}/**/*.hprof
 
     - name: Zip up DBs
+      if: ${{ always() }}
       run: zip -r db.zip *
       working-directory: ${{ runner.temp }}/dbs
 
